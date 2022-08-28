@@ -22,19 +22,22 @@ function generateImage() {
     {
         // Get number of squares of each color (because I don't know how to calculate)
         let squares = [
-            contexto.match(/🟩/g).length,
-            contexto.match(/🟨/g).length,
-            contexto.match(/🟥/g).length,
+            /🟩/g.test(contexto) ? contexto.match(/🟩/g).length : 0,
+            /🟨/g.test(contexto) ? contexto.match(/🟨/g).length : 0,
+            /🟥/g.test(contexto) ? contexto.match(/🟥/g).length : 0,
         ];
 
         // Operate the contexto input getting just the necessary
-        contexto = contexto.replace(/([A-Za-z.#\n🟩🟨🟥])/g, "");
+        contexto = contexto.replace(/([A-Za-z.#@\n🟩🟨🟥])/g, "");
+        console.log(contexto);
         contexto = contexto.split(" ");
+        console.log(contexto);
         contexto = contexto.filter(function (el) {
             if (el != "") {
                 return el;
             }
         });
+        console.log(contexto);
         $("#title-contexto").html(`Contexto #${contexto[0]}`);
 
         // Accumulate the complete html string to show the result
@@ -43,7 +46,7 @@ function generateImage() {
         for (let a = 0; a < squares[0]; a++) {
             finalText += `🟩 `;
         }
-        finalText += `${contexto[1]}</li>`;
+        finalText += `${contexto[2]}</li>`;
         finalText += `<li>`;
         for (let a = 0; a < squares[1]; a++) {
             finalText += `🟨 `;
@@ -74,7 +77,6 @@ function generateImage() {
         $("#highscore ul").html(`<li>${score[2]}</li>`);
     }
 
-    console.log(!$.trim(globle));
     if ($.trim(globle)) 
     {
         globle = globle.split("\n");
